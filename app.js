@@ -89,9 +89,9 @@ app.get("/shortener/new/:url", function (req, res) {
       });
     });
     mdbClient.close();
-
-    res.json(resData);
-  }
+  } //end valid url section
+  
+  res.json(resData);
 });
 
 function isValidURL(str) {
