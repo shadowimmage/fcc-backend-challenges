@@ -68,7 +68,7 @@ app.get("/shortener/new/:url", function (req, res) {
 
     var mdbClient = mongo.connect(mongoURL, function (err, client) {
       if (err) console.error(err);
-      const db = mdbClient.db(mdbName);
+      const db = client.db(mdbName);
       var lastDoc = db.collection(shortUrlCollection).find().sort({
         index: -1
       }).limit(1);
@@ -90,7 +90,7 @@ app.get("/shortener/new/:url", function (req, res) {
     });
     mdbClient.close();
   } //end valid url section
-  
+
   res.json(resData);
 });
 
@@ -112,7 +112,7 @@ app.get("/shortener/:id?", function(req, res) {
   if (req.params.id !== null) {
     var mdbClient = mongo.connect(mongoURL, function (err, client) {
       if (err) console.error(err);
-      const db = mdbClient.db(mdbName);
+      const db = client.db(mdbName);
       var shortDestDoc = db.collection(shortUrlCollection).find({
         index: parseInt(req.params.id)
       }).project({
