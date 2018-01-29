@@ -1,0 +1,29 @@
+{
+  "name": "fcc-backend-challenges",
+  "version": "1.0.0",
+  "description": "Free Code Camp Backend API challenge apps",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shadowimmage/fcc-backend-challenges.git"
+  },
+  "keywords": [
+    "Express",
+    "MongoDB",
+    "Node",
+    "FreeCodeCamp"
+  ],
+  "author": "Chase Sawyer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shadowimmage/fcc-backend-challenges/issues"
+  },
+  "homepage": "https://github.com/shadowimmage/fcc-backend-challenges#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^3.0.1"
+  }
+}
