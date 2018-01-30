@@ -96,7 +96,7 @@ app.get("/shortener/new/:url*", function (req, res) {
 
 
 app.get("/shortener/:id?", function(req, res) {
-  if (req.params.id !== null) {
+  if (req.params.id) {
     var mdbClient = mongo.connect(mongoURL, function (err, client) {
       if (err) console.error(err);
       const db = client.db(mdbName);
@@ -114,7 +114,7 @@ app.get("/shortener/:id?", function(req, res) {
         }
       });
     });
-    mdbClient.close();
+    if (mdbClient) mdbClient.close();
   } else {
     res.end(JSON.stringify({"error":"invalid URL"}));
   }
