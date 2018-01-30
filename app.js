@@ -55,15 +55,17 @@ app.get("/api/whoami/", function (req, res) {
   res.json(resData);
 });
 
-app.get("/shortener/new/:url*", function (req, res) {
+app.get("/shortener/new/*", function (req, res) {
   var resData = {
     original_url: "invalid URL",
     short_url: null
   };
   resData.short_url = req.hostname + "/shortener/";
 
-  if (validUrl.isUri(req.params.url)) {
-    resData.original_url = req.params.url;
+  var url = req.url.slice(15);
+
+  if (validUrl.isUri(url)) {
+    resData.original_url = url;
 
     var mdbClient = mongo.connect(mongoURL, function (err, client) {
       if (err) console.error(err);
@@ -72,7 +74,7 @@ app.get("/shortener/new/:url*", function (req, res) {
         index: -1
       }).limit(1);
       var insertIndex = 1;
-      if (lastDoc.length > 0) {
+      if (lastDoc.count() > 0) {
         lastDoc.project({_id: 0, index: 1}).toArray(function (err, documents) {
           if (err) console.error(err);
           // console.log(documents[0].index);
