@@ -66,33 +66,31 @@ app.get("/shortener/new/*", function (req, res) {
 
   if (validUrl.isUri(url)) {
     resData.original_url = url;
-
     var mdbClient = mongo.connect(mongoURL, function (err, client) {
       if (err) console.error(err);
       const db = client.db(mdbName);
-      var lastDoc = db.collection(shortUrlCollection).find().sort({
-        index: -1
-      }).limit(1);
-      var insertIndex = 1;
-      if (lastDoc.count() > 0) {
-        lastDoc.project({_id: 0, index: 1}).toArray(function (err, documents) {
-          if (err) console.error(err);
+      var lastDoc = db.collection(shortUrlCollection).find().sort({ index: -1 }).limit(1);
+      lastDoc.project({_id: 0, index: 1}).toArray(function (err, documents) {
+        if (err) console.error(err);
+        var insertIndex = 1;
+        if (documents.length > 0) {
           // console.log(documents[0].index);
           insertIndex += documents[0].index;
+        }
+        db.collection(shortUrlCollection).insertOne({
+          index: insertIndex,
+          url: resData.original_url
+        }, function(err, r) {
+          if (err) console.error(err);
+          resData.short_url += insertIndex;
+          res.json(resData);
         });
-      }
-      db.collection(shortUrlCollection).insertOne({
-        index: insertIndex,
-        url: resData.original_url
-      }, function(err, r) {
-        if (err) console.error(err);
-        resData.short_url += insertIndex;
       });
     });
     if (mdbClient) mdbClient.close();
-  } //end valid url section
-
+  } else { //end valid url section
   res.json(resData);
+  }
 });
 
 
