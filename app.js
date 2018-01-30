@@ -55,7 +55,7 @@ app.get("/api/whoami/", function (req, res) {
   res.json(resData);
 });
 
-app.get("/shortener/new/:url", function (req, res) {
+app.get("/shortener/new/:url*", function (req, res) {
   var resData = {
     original_url: "invalid URL",
     short_url: null
