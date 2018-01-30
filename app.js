@@ -4,6 +4,7 @@ const express = require('express');
 const mongo = require('mongodb').MongoClient;
 const mongoURL = process.env.MONGODB_URI;
 const mdbName = process.env.MDBNAME;
+const urlValidator = require('./url_validator');
 const shortUrlCollection = 'shortUrls';
 var app = express();
 
@@ -63,7 +64,7 @@ app.get("/shortener/new/:url", function (req, res) {
   /// db.find().sort( {index} ).limit( 1 )
   /// how to insert at last index position - not using inbuilt object ids.
 
-  if (isValidUrl(req.params.url)) {
+  if (urlValidator.isValidURL(req.params.url)) {
     resData.original_url = req.params.url;
 
     var mdbClient = mongo.connect(mongoURL, function (err, client) {
@@ -94,19 +95,7 @@ app.get("/shortener/new/:url", function (req, res) {
   res.json(resData);
 });
 
-function isValidURL(str) {
-  var pattern = new RegExp('^(https?:\/\/)?'+ // protocol
-    '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|'+ // domain name
-    '((\d{1,3}\.){3}\d{1,3}))'+ // OR ip (v4) address
-    '(\:\d+)?(\/[-a-z\d%_.~+]*)*'+ // port and path
-    '(\?[;&a-z\d%_.~+=-]*)?'+ // query string
-    '(\#[-a-z\d_]*)?$','i'); // fragment locater
-  if(!pattern.test(str)) {
-    return false;
-  } else {
-    return true;
-  }
-};
+
 
 app.get("/shortener/:id?", function(req, res) {
   if (req.params.id !== null) {
@@ -120,7 +109,11 @@ app.get("/shortener/:id?", function(req, res) {
         url: 1
       }).toArray(function (err, documents) {
         if (err) console.error(err);
-        res.redirect(documents[0].url);
+        if (documents.length > 0) {
+          res.redirect(documents[0].url);
+        } else {
+          res.end("Invalid short URL id.");
+        }
       });
     });
     mdbClient.close();
