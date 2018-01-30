@@ -4,7 +4,7 @@ const express = require('express');
 const mongo = require('mongodb').MongoClient;
 const mongoURL = process.env.MONGODB_URI;
 const mdbName = process.env.MDBNAME;
-const urlValidator = require('./url_validator');
+const validUrl = require('valid-url');
 const shortUrlCollection = 'shortUrls';
 var app = express();
 
@@ -61,10 +61,8 @@ app.get("/shortener/new/:url", function (req, res) {
     short_url: null
   };
   resData.short_url = req.hostname + "/shortener/";
-  /// db.find().sort( {index} ).limit( 1 )
-  /// how to insert at last index position - not using inbuilt object ids.
 
-  if (urlValidator.isValidURL(req.params.url)) {
+  if (validUrl.isUri(req.params.url)) {
     resData.original_url = req.params.url;
 
     var mdbClient = mongo.connect(mongoURL, function (err, client) {
@@ -89,7 +87,7 @@ app.get("/shortener/new/:url", function (req, res) {
         resData.short_url += insertIndex;
       });
     });
-    mdbClient.close();
+    if (mdbClient) mdbClient.close();
   } //end valid url section
 
   res.json(resData);
