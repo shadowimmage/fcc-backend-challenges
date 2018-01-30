@@ -72,7 +72,7 @@ app.get("/shortener/new/:url*", function (req, res) {
         index: -1
       }).limit(1);
       var insertIndex = 1;
-      if (lastDoc !== null) {
+      if (lastDoc.length > 0) {
         lastDoc.project({_id: 0, index: 1}).toArray(function (err, documents) {
           if (err) console.error(err);
           // console.log(documents[0].index);
