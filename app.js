@@ -13,6 +13,8 @@ var app = express();
 // app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
+
+// Challenge 1 - Timestamp conversion UNIX <--> Standard
 app.get("/api/timestamp/:timestamp?", function (req, res) {
   var timestamp = req.params.timestamp
   var resData = {
@@ -38,6 +40,7 @@ app.get("/api/timestamp/:timestamp?", function (req, res) {
   }
 });
 
+// Challenge 2 - Get requesting client IP Address
 app.get("/api/whoami/", function (req, res) {
   var resData = {
     ipaddress: null,
@@ -55,6 +58,8 @@ app.get("/api/whoami/", function (req, res) {
   res.json(resData);
 });
 
+
+// Challenge 3 - URL Shortener (part1) - Short URL Creator
 app.get("/shortener/new/*", function (req, res) {
   var resData = {
     original_url: "invalid URL",
@@ -93,8 +98,7 @@ app.get("/shortener/new/*", function (req, res) {
   }
 });
 
-
-
+// Challenge 3 - URL Shortener (part 2) - Short URL resolver/redirector
 app.get("/shortener/:id?", function(req, res) {
   if (req.params.id) {
     var mdbClient = mongo.connect(mongoURL, function (err, client) {
