@@ -1,11 +1,13 @@
 // app.js
 
 const express = require('express')
-const mongo = require('mongodb').MongoClient
+const mongoConnection = require('./db')
 const mongoURL = process.env.MONGODB_URI
-const mdbName = process.env.MDBNAME
+// const mdbName = process.env.MDBNAME
 const validUrl = require('valid-url')
 const shortUrlCollection = 'shortUrls'
+const imgSearchCollection = 'imgSearches'
+const https = require('https')
 var app = express()
 
 
@@ -24,7 +26,7 @@ app.get('/api/timestamp/:timestamp?', function (req, res) {
   if (!timestamp) {
     res.json(resData)
   } else {
-    const months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     if (isNaN(parseInt(timestamp))) {
       // is a string
       var date = new Date(timestamp)
@@ -71,28 +73,24 @@ app.get("/shortener/new/*", function (req, res) {
 
   if (validUrl.isUri(url)) {
     resData.original_url = url
-    var mdbClient = mongo.connect(mongoURL, function (err, client) {
+    var collection = mongoConnection.getDB().collection(shortUrlCollection)
+    var lastDoc = collection.find().sort({ index: -1 }).limit(1)
+    lastDoc.project({_id: 0, index: 1}).toArray(function (err, documents) {
       if (err) console.error(err)
-      const db = client.db(mdbName)
-      var lastDoc = db.collection(shortUrlCollection).find().sort({ index: -1 }).limit(1)
-      lastDoc.project({_id: 0, index: 1}).toArray(function (err, documents) {
+      var insertIndex = 1
+      if (documents.length > 0) {
+        // console.log(documents[0].index);
+        insertIndex += documents[0].index
+      }
+      collection.insertOne({
+        index: insertIndex,
+        url: resData.original_url
+      }, function(err, r) {
         if (err) console.error(err)
-        var insertIndex = 1;
-        if (documents.length > 0) {
-          // console.log(documents[0].index);
-          insertIndex += documents[0].index
-        }
-        db.collection(shortUrlCollection).insertOne({
-          index: insertIndex,
-          url: resData.original_url
-        }, function(err, r) {
-          if (err) console.error(err)
-          resData.short_url += insertIndex
-          res.json(resData)
-        })
+        resData.short_url += insertIndex
+        res.json(resData)
       })
     })
-    if (mdbClient) mdbClient.close()
   } else { //end valid url section
   res.json(resData)
   }
@@ -101,57 +99,130 @@ app.get("/shortener/new/*", function (req, res) {
 // Challenge 3 - URL Shortener (part 2) - Short URL resolver/redirector
 app.get('/shortener/:id?', function (req, res) {
   if (req.params.id) {
-    var mdbClient = mongo.connect(mongoURL, function (err, client) {
+    var collection = mongoConnection.getDB().collection(shortUrlCollection)
+    var shortDestDoc = collection.find({
+      index: parseInt(req.params.id)
+    }).project({
+      _id: 0,
+      url: 1
+    }).toArray(function (err, documents) {
       if (err) console.error(err)
-      const db = client.db(mdbName)
-      var shortDestDoc = db.collection(shortUrlCollection).find({
-        index: parseInt(req.params.id)
-      }).project({
-        _id: 0,
-        url: 1
-      }).toArray(function (err, documents) {
-        if (err) console.error(err)
-        if (documents.length > 0) {
-          res.redirect(documents[0].url)
-        } else {
-          res.end('Invalid short URL id.')
-        }
-      });
-    });
-    if (mdbClient) mdbClient.close()
+
+      if (documents.length > 0) {
+        res.redirect(documents[0].url)
+      } else {
+        res.end('Invalid short URL id.')
+      }
+    })
   } else {
     res.end(JSON.stringify({'error':'invalid URL'}))
   }
 })
 
-// Challenge 4 - Image Search Abstraction Layer (search)
-app.get('/api/imagesearch/:q', function(req, res) {
+// Challenge 4 - Image Search Abstraction Layer (search) - also first time using async/await
+app.get('/api/imagesearch/:q?', function (req, res) {
   const resultsPerQuery = 10
   var localData = {
     searchTerm: '',
-    pagination: 0,
+    pagination: 1,
   }
   if (!req.params.q) {
     res.json({'error': 'search query required'})
   } else {
     if (req.query.offset) {
       var offset_tmp = Number(req.query.offset)
-      if (!isNan(offset_tmp)) {
+      if (!isNaN(offset_tmp)) {
         localData.pagination = offset_tmp
       }
     }
     localData.searchTerm = req.params.q
-    res.json(localData)
-  }
+    var options = {
+      host: 'www.googleapis.com',
+      port: 443,
+      path: '/customsearch/v1?',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    options.path += 'searchType=image'
+    options.path += '&safe=medium'
+    options.path += '&fields=kind,items(title,link,snippet,image/contextLink,image/thumbnailLink)'
+    options.path += '&key=' + process.env.G_SEARCH_API_KEY
+    options.path += '&cx=' + process.env.G_CSE_ID
+    options.path += '&q=' + localData.searchTerm
+    options.path += '&start=' + Math.max(localData.pagination * resultsPerQuery, 1)
 
+    const imgReq = https.request(options, function(imgRes) {
+      var output = ''
+      imgRes.setEncoding('utf8')
+
+      imgRes.on('data', function (chunk) {
+        output += chunk
+      })
+
+      imgRes.on('end', function () {
+        localData.imgJSON = JSON.parse(output)
+
+        var collection = mongoConnection.getDB().collection(imgSearchCollection)
+        var lastDoc = collection.find().sort({ index: -1 }).limit(1)
+        lastDoc.project({_id: 0, index: 1}).toArray(function (err, documents) {
+          if (err) console.error(err)
+
+          var insertIndex = 1
+          if (documents.length > 0) {
+            insertIndex += documents[0].index
+          }
+
+          collection.insertOne({
+            index: insertIndex,
+            query: localData.searchTerm
+          }, function(err, r) {
+            if (err) console.error(err)
+            res.json(localData)
+          })
+        })
+      })
+    })
+
+    imgReq.on('error', function (err) {
+      res.send('error: ' + err.message) 
+    })
+
+    imgReq.end()
+  }
 })
 
 // Challenge 4 - Image Search Abstraction Layer (recent searches)
 app.get('/api/latest/imagesearch', function (req, res) {
-  res.json({'state': 'not implemented yet.'})
+  var collection = mongoConnection.getDB().collection(imgSearchCollection)
+  var lastSearches = collection.find().sort({ index: -1 }).limit(10)
+  lastSearches.project({ _id: 0, query: 1 }).toArray(function (err, documents) {
+    if (err) console.error(err.message)
+    res.json(documents)
+  })
 })
 
-// listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port)
+// set up db and begin app once connection is up
+mongoConnection.connect(mongoURL, function (err) {
+  if (err) {
+    console.log('Unable to connect to MongoDB.')
+    process.exit(1)
+  } else {
+    console.log('MongoDB connected.')
+    var listener = app.listen(process.env.PORT, function () {
+      console.log('Your app is listening on port ' + listener.address().port)
+    })
+  }
+})
+
+process.on('SIGTERM', function () {
+  console.log('App shutdown...')
+  mongoConnection.close(function (err) {
+    if (err) {
+      console.error(err.message)
+    } else {
+      console.log('MongoDB closed.')
+    }
+  })  
 })
