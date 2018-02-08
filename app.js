@@ -13,6 +13,7 @@ var app = express()
 
 // http://expressjs.com/en/starter/static-files.html
 // app.use(express.static('public'));
+app.set('view engine', 'pug')
 
 // http://expressjs.com/en/starter/basic-routing.html
 
@@ -203,6 +204,16 @@ app.get('/api/latest/imagesearch', function (req, res) {
   })
 })
 
+// Challenge 5 - File Metadata Microservice - upload page
+app.get('/api/filesize/upload', function (req, res) {
+  res.render('upload')
+})
+
+// Challenge 5 - File Metadata Microservice - file upload result
+ app.post('/api/filesize', function (req, res) {
+   
+ })
+
 // set up db and begin app once connection is up
 mongoConnection.connect(mongoURL, function (err) {
   if (err) {
@@ -216,6 +227,8 @@ mongoConnection.connect(mongoURL, function (err) {
   }
 })
 
+// Handle shutdown command from host container/system
+//   Terminates connection to Mongo before completing shutdown.
 process.on('SIGTERM', function () {
   console.log('App shutdown...')
   mongoConnection.close(function (err) {

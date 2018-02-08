@@ -1,0 +1,8 @@
+html
+    head
+        title File Metadata Microservice
+    body
+        p Submit a file to view it's size (in bytes).
+        form(action='/api/filesize/' method='post' enctype='multipart/form-data')
+            input(type='file' name='file')
+            input(type='submit')

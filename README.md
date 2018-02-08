@@ -93,3 +93,25 @@ Show recent queries at the endpoint:
 - User Story: I can get the image URLs, alt text and page urls for a set of images relating to a given search string.
 - User Story: I can paginate through the responses by adding a ?offset=2 parameter to the URL.
 - User Story: I can get a list of the most recently submitted search strings.
+
+## Challenge 5 - File Metadata Microservice
+
+Full-stack (really basic frontend in Pug/HTML) that takes a FormData object from a file upload form and returns the file size in bytes as part of a JSON response.
+
+Usage:
+
+- `https://fcc-challenges.herokuapp.com/api/filezise/upload`
+
+Will output:
+ 
+```json
+{}
+  "filename": "somefile.ext",
+  "size": 12345
+}
+```
+
+### User Stories
+
+- User Story: I can submit a FormData object that includes a file upload.
+- User Story: When I submit something, I will receive the file size in bytes within the JSON response
