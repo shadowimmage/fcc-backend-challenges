@@ -8,6 +8,15 @@ const validUrl = require('valid-url')
 const shortUrlCollection = 'shortUrls'
 const imgSearchCollection = 'imgSearches'
 const https = require('https')
+const multer = require('multer')
+
+var storage = multer.memoryStorage()
+var upload = multer({ 
+  storage: storage, 
+  limits: {
+    fileSize: 5000000
+  }
+})
 var app = express()
 
 
@@ -210,8 +219,11 @@ app.get('/api/filesize/upload', function (req, res) {
 })
 
 // Challenge 5 - File Metadata Microservice - file upload result
- app.post('/api/filesize', function (req, res) {
-   
+ app.post('/api/filesize', upload.single('file'), function (req, res) {
+  res.json({
+    "filename": req.file.originalname,
+    "size": req.file.size
+  })
  })
 
 // set up db and begin app once connection is up
