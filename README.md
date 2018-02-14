@@ -82,11 +82,11 @@ Usage:
 
 Search for images by replacing `{query}` with your query, and paginate through results with `{page}`.
 
-- `https://fcc-challenges.herokuapp.com/api/imagesearch/{query}?offset={page}`
+- `https://fcc-challenges.herokuapp.com/api/imagesearch/q/{query}?offset={page}`
 
 Show recent queries at the endpoint:
 
-- `https://fcc-challenges.herokuapp.com/api/latest/imagesearch/`
+- `https://fcc-challenges.herokuapp.com/api/imagesearch/latest`
 
 ### User Stories
 
