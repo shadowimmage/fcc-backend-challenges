@@ -3,7 +3,6 @@
 const express = require('express')
 const mongoConnection = require('./utils/db/db')
 const mongoURL = process.env.MONGODB_URI
-// const mdbName = process.env.MDBNAME
 
 const app = express()
 
@@ -16,7 +15,24 @@ app.use('/', routes)
 // http://expressjs.com/en/starter/static-files.html
 // app.use(express.static('public'));
 
+// Error Handling Routes
+/* eslint-disable no-console */ // used for Logging to Heroku host logs.
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  next(err)
+})
+app.use(function (err, req, res, next) { // eslint-disable-line
+  res.status(500)
+  res.render('error', {'error': err})
+})
+
+// 404
+app.use(function (req, res, next) { // eslint-disable-line
+  res.status(404).send('404 -- Resource not found.')
+})
+
 // set up db and begin app once connection is up
+
 mongoConnection.connect(mongoURL, function (err) {
   if (err) {
     console.log('Unable to connect to MongoDB.')
@@ -44,3 +60,8 @@ process.on('SIGTERM', function () {
     }
   })  
 })
+
+/**
+ * Export the Express app so that it can be used by Chai
+ */
+module.exports = app

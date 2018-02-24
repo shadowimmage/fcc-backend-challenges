@@ -1,8 +1,21 @@
 # FreeCodeCamp Backend API Services Challenges
 
-Deployed to Heroku here: https://fcc-challenges.herokuapp.com/
+Deployed to Heroku here: <https://fcc-challenges.herokuapp.com/>
 
 These APIs/Pages have been modified to be slightly different than the FreeCodeCamp challenges so that they can all live within the same app and be a bit more useful and cohesive.
+
+## Contents
+
+---------
+
+- APIs
+  - [Challenge 1: Timestamp](./fcc-backend-challenges#challenge-1---timestamp-microservice)
+  - [Challenge 2: Request Header Parser](./fcc-backend-challenges#challenge-2---request-header-parser-microservice)
+  - [Challenge 3: URL Shortener](./fcc-backend-challenges#challenge-3---url-shortener-microservice)
+  - [Challenge 4: Image Search](./fcc-backend-challenges#challenge-4---image-search-abstraction-layer)
+  - [Challenge 5: File Metadata](./fcc-backend-challenges#challenge-5---file-metadata-microservice)
+
+---------
 
 ## Challenge 1 - Timestamp Microservice
 
@@ -20,7 +33,7 @@ Example output:
 }
 ```
 
-### User Stories
+### C1 User Stories
 
 - User Story: I can pass a string as a parameter, and it will check to see whether that string contains either a unix timestamp or a natural language date (example: January 1, 2016).
 - User Story: If it does, it returns both the Unix timestamp and the natural language form of that date.
@@ -42,7 +55,7 @@ Example output:
 }
 ```
 
-### User Stories
+### C2 User Stories
 
 - User Story: I can get the IP address, language and operating system for my browser.
 
@@ -70,15 +83,15 @@ Will redirect to:
 
 - `https://www.google.com/`
 
-### User Stories
+### C3 User Stories
 
 - User Story: I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.
-- User Story: If I pass an invalid URL that doesn't follow the valid http://www.example.com format, the JSON response will contain an error instead.
+- User Story: If I pass an invalid URL that doesn't follow the valid `http://www.example.com` format, the JSON response will contain an error instead.
 - User Story: When I visit that shortened URL, it will redirect me to my original link.
 
 ## Challenge 4 - Image Search Abstraction Layer
 
-Usage: 
+Usage:
 
 Search for images by replacing `{query}` with your query, and paginate through results with `{page}`.
 
@@ -88,7 +101,7 @@ Show recent queries at the endpoint:
 
 - `https://fcc-challenges.herokuapp.com/api/imagesearch/latest`
 
-### User Stories
+### C4 User Stories
 
 - User Story: I can get the image URLs, alt text and page urls for a set of images relating to a given search string.
 - User Story: I can paginate through the responses by adding a ?offset=2 parameter to the URL.
@@ -103,15 +116,15 @@ Usage:
 - `https://fcc-challenges.herokuapp.com/api/filezise/upload`
 
 Will output:
- 
+
 ```json
-{}
-  "filename": "somefile.ext",
+{
+  "filename": "some_file.ext",
   "size": 12345
 }
 ```
 
-### User Stories
+### C5 User Stories
 
 - User Story: I can submit a FormData object that includes a file upload.
 - User Story: When I submit something, I will receive the file size in bytes within the JSON response
