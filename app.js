@@ -44,6 +44,7 @@ mongoConnection.connect(mongoURL, function (err) {
     app.dbConn = mongoConnection
     var listener = app.listen(process.env.PORT, function () {
       console.log('Your app is listening on port ' + listener.address().port)
+      app.emit('serverOK')
     })
   }
 })

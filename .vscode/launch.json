@@ -7,6 +7,23 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Mocha Tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "-u",
+                "tdd",
+                "--timeout",
+                "60000",
+                "--colors",
+                "--recursive",
+                "${workspaceFolder}/test"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "envFile": "${workspaceFolder}\\.env"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}\\app.js",
             "envFile": "${workspaceFolder}\\.env"
