@@ -113,7 +113,7 @@ Full-stack (really basic frontend in Pug/HTML) that takes a FormData object from
 
 Usage:
 
-- `https://fcc-challenges.herokuapp.com/api/filezise/upload`
+- `https://fcc-challenges.herokuapp.com/api/filesize/upload`
 
 Will output:
 
