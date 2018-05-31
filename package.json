@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha --recursive --timeout 5000"
+    "test": "mocha --recursive --timeout 5000 --exit"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "FreeCodeCamp"
   ],
   "author": "Chase Sawyer",
-  "license": "MIT",
+  "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/shadowimmage/fcc-backend-challenges/issues"
   },
@@ -33,6 +33,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
+    "dotenv": "^5.0.1",
     "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",

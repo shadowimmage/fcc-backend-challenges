@@ -1,5 +1,10 @@
 // app.js
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load()
+}
+
+
 const express = require('express')
 const mongoConnection = require('./utils/db/db')
 const mongoURL = process.env.MONGODB_URI
