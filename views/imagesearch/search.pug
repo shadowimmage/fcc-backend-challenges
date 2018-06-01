@@ -2,8 +2,13 @@ html
     head
         title Image Search Abstraction
     body
-        h1 Search for an Image
-        p use the input form below to search for an image using the Google image search api
-        form(action='/api/imagesearch/q/' method='get' enctype='application/x-www-form-urlencoded')
-            input(type='text' name='q')
-            input(type='submit')
+        div
+            h1 Search for an Image
+            p use the input form below to search for an image using the Google image search api
+            form(action='/api/imagesearch/q/' method='get' enctype='application/x-www-form-urlencoded')
+                input(type='text' name='q')
+                input(type='submit')
+        div
+            h2 See Latest Searches
+            a(href="/api/imagesearch/latest")
+                button Latest

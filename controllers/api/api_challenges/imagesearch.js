@@ -23,7 +23,7 @@ exports.query = function (req, res) {
         localData.pagination = offset_tmp
       }
     }
-    localData.searchTerm = req.query.q
+    localData.searchTerm = encodeURIComponent(req.query.q)
     var options = {
       host: 'www.googleapis.com',
       port: 443,
