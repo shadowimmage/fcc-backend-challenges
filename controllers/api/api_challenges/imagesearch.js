@@ -3,6 +3,10 @@
 const https = require('https')
 const imgSearchCollection = 'imgSearches'
 
+exports.search = function (req, res) {
+  res.render('imagesearch/search')
+}
+
 // Challenge 4 - Image Search Abstraction Layer (search) - also first time using async/await
 exports.query = function (req, res) {
   const resultsPerQuery = 10
@@ -10,7 +14,7 @@ exports.query = function (req, res) {
     searchTerm: '',
     pagination: 1,
   }
-  if (!req.params.q) {
+  if (!req.query.q) {
     res.json({'error': 'search query required'})
   } else {
     if (req.query.offset) {
@@ -19,7 +23,7 @@ exports.query = function (req, res) {
         localData.pagination = offset_tmp
       }
     }
-    localData.searchTerm = req.params.q
+    localData.searchTerm = req.query.q
     var options = {
       host: 'www.googleapis.com',
       port: 443,

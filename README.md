@@ -4,6 +4,10 @@ Deployed to Heroku here: <https://fcc-challenges.herokuapp.com/>
 
 These APIs/Pages have been modified to be slightly different than the FreeCodeCamp challenges so that they can all live within the same app and be a bit more useful and cohesive.
 
+## Change Note May 2018
+
+A major change to FreeCodeCamp's curriculum may have broken some of these microservices. In addition, the ordering and naming convention may have changed.
+
 ## Contents
 
 ---------
@@ -13,6 +17,7 @@ These APIs/Pages have been modified to be slightly different than the FreeCodeCa
   - [Challenge 2: Request Header Parser](./fcc-backend-challenges#challenge-2---request-header-parser-microservice)
   - [Challenge 3: URL Shortener](./fcc-backend-challenges#challenge-3---url-shortener-microservice)
   - [Challenge 4: Image Search](./fcc-backend-challenges#challenge-4---image-search-abstraction-layer)
+  - [Challenge 4(v2): Exercise Tracker]
   - [Challenge 5: File Metadata](./fcc-backend-challenges#challenge-5---file-metadata-microservice)
 
 ---------
@@ -106,6 +111,12 @@ Show recent queries at the endpoint:
 - User Story: I can get the image URLs, alt text and page urls for a set of images relating to a given search string.
 - User Story: I can paginate through the responses by adding a ?offset=2 parameter to the URL.
 - User Story: I can get a list of the most recently submitted search strings.
+
+## Challenge 4(v2) - Exercise Tracker
+
+```NOTE: This challenge replaced the image search API microservice challenge as of May 2018 with the update to the Free Code Camp curriculum.```
+
+This full stack app creates an exercise tracker, with the ability to create a new user and then add exercise logs to that user.
 
 ## Challenge 5 - File Metadata Microservice
 
