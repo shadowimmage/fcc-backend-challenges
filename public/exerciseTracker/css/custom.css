@@ -1,0 +1,21 @@
+div.form-column {
+    background-color: lightgray;
+    margin: 0px 5px 25px 5px;
+    padding: 15px;
+    display: inline-block;
+    width: 100%;
+    max-width: 350px;
+    border-radius: 5px;
+    box-shadow: 2px 2px gray;
+}
+
+button {
+    box-shadow: 2px 2px gray;
+}
+
+code {
+    font-family: monospace;
+    color: black;
+    background-color: lightblue;
+    padding: 2px;
+}

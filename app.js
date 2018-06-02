@@ -18,7 +18,7 @@ const routes = require('./routes')
 app.use('/', routes)
 
 // http://expressjs.com/en/starter/static-files.html
-// app.use(express.static('public'));
+app.use(express.static('./public'))
 
 // Error Handling Routes
 /* eslint-disable no-console */ // used for Logging to Heroku host logs.
