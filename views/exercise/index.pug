@@ -16,21 +16,29 @@ html(lang='en')
                     h3 Create a New User
                     p
                         code POST /api/exercise/new-user
-                    form(action='/api/exercise/new-user' method='post')
+                    form(action='/exerciseTracker/api/new-user' method='post')
                         div(class='form-group')
                             label(for='username') Username
-                            input(class='form-control' id='username' name='username' placeholder='username' type='text')
+                            input(id='username' class='form-control' name='username' placeholder='username' type='text')
                         button(type='submit' class='btn btn-primary btn-block btn-sm') Submit
                 div(class='col-sm form-column')
                     h3 Add exercises
                     p
                         code POST /api/exercise/add
-                    form(action='/api/exercise/add' method='post')
-                        input(id='uid' name='userId' placeholder='userId*' type='text')
-                        input(id='desc' name='description' placeholder='description*' type='text')
-                        input(id='mins' name='duration' placeholder='duration* (mins)' type='number')
-                        input(id='date' name='date' placeholder='date (yyyy-mm-dd)' type='date')
-                        input(value='Submit' type='submit')
+                    form(action='/exerciseTracker/api/add' method='post')
+                        div(class='form-group')
+                            label(for='uid') User ID
+                            input(id='uid' class='form-control' name='userId' placeholder='userId*' type='text')
+                        div(class='form-group')
+                            label(for='desc') Description
+                            input(id='desc' class='form-control' name='description' placeholder='description*' type='text')
+                        div(class='form-group')
+                            label(for='mins') Duration
+                            input(id='mins' class='form-control' name='duration' placeholder='duration* (mins)' type='number')
+                        div(class='form-group')
+                            label(for='date') Date
+                            input(id='date' class='form-control' name='date' placeholder='date (yyyy-mm-dd)' type='date')
+                        button(type='submit' class='btn btn-primary btn-block btn-sm') Submit
             div(class='row')
                 div(class='col-sm')
                     p. 

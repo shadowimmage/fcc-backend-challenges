@@ -8,6 +8,6 @@ const exercise = require('./exercise')
 
 router.use('/api/', apiRouter)
 router.use('/shortener', shortener)
-router.use('/exercise', exercise)
+router.use('/exerciseTracker', exercise)
 
 module.exports = router

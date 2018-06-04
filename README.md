@@ -116,7 +116,17 @@ Show recent queries at the endpoint:
 
 ```NOTE: This challenge replaced the image search API microservice challenge as of May 2018 with the update to the Free Code Camp curriculum.```
 
-This full stack app creates an exercise tracker, with the ability to create a new user and then add exercise logs to that user.
+Full-stack app that creates an exercise tracker, with the ability to create a new user and then add exercise logs to that user.
+
+Usage:
+
+Going to `https://fcc-challenges.herokuapp.com/exercise` will take you to the UI frontend.
+
+API backend:
+
+- `POST: /api/exercise/new-user` with username to create a new user
+- `POST: /api/exercise/add` with valid userID, activity, duration, and optionally the date
+- `GET: /api/exercise/log?` with at least userID to get user activity for that user
 
 ## Challenge 5 - File Metadata Microservice
 
