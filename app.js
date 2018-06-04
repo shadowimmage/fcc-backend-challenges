@@ -8,7 +8,6 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const mongoConnection = require('./utils/db/db')
 const mongoURL = process.env.MONGODB_URI
-const bodyParser = require('body-parser')
 
 const app = express()
 
@@ -20,11 +19,6 @@ app.use('/', routes)
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('./public'))
-
-// Body-parser setup
-app.jsonParser = bodyParser.json() // support json encoded bodies
-app.urlencodedParser = bodyParser.urlencoded({ extended: true }) // support encoded bodies
-app.plaintextParser = bodyParser.text() // support plain bodies
 
 // Error Handling Routes
 /* eslint-disable no-console */ // used for Logging to Heroku host logs.

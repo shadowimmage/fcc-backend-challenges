@@ -18,7 +18,7 @@ exports.addUser = function (req, res) {
       res.status(500).send('Unable to complete action.')
     } else {
       if (documents.length > 0) { // username was found
-        res.status(400).send('Username \'' + req.params.username + '\' already taken.')
+        res.status(400).send('Username \'' + req.body.username + '\' already taken.')
       } else {
         collection.insertOne({'username': req.body.username}, function (err, result) {
           if (err) {
@@ -26,7 +26,7 @@ exports.addUser = function (req, res) {
             res.status(500).send('500 server error; unable to save username.')
           } else {
             res.json({
-              'username': res.body.username,
+              'username': req.body.username,
               '_id': result.insertedId
             })
           }

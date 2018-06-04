@@ -1,10 +1,14 @@
 // routes/exercise/
 
-const app = require('../../app')
+const bodyParser = require('body-parser')
 const exerciseRouter = require('express').Router()
-const exercise_tracker = require('../../controllers/api/api_challenges/exercise')
+const exerciseTracker = require('../../controllers/api/api_challenges/exercise')
 
-exerciseRouter.get('/', exercise_tracker.uiPage)
-exerciseRouter.post('/api/new-user', app.plaintextParser, exercise_tracker.addUser)
+var urlencodedParser = bodyParser.urlencoded({ extended: true }) // support encoded bodies
+
+exerciseRouter.get('/', exerciseTracker.uiPage)
+exerciseRouter.post('/api/new-user', urlencodedParser, exerciseTracker.addUser)
+// exerciseRouter.post('/api/add', app.urlencodedParser, exerciseTracker.addActivity)
+// exerciseRouter.get('/api/log:userID', exerciseTracker.getUserLog)
 
 module.exports = exerciseRouter
