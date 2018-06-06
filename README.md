@@ -120,7 +120,7 @@ Full-stack app that creates an exercise tracker, with the ability to create a ne
 
 Usage:
 
-Going to `https://fcc-challenges.herokuapp.com/exercise` will take you to the UI frontend.
+Going to `https://fcc-challenges.herokuapp.com/exerciseTracker` will take you to the UI frontend.
 
 API backend:
 

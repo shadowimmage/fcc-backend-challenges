@@ -60,4 +60,11 @@ describe('Routes resolve', function () {
       done()
     })
   })
+
+  it('/exerciseTracker/', function (done) {
+    chai.request(app).get('/exerciseTracker/').end(function (err, res) {
+      expect(res).to.have.status(200)
+      done()
+    })
+  })
 })
