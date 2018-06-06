@@ -17,7 +17,7 @@ A major change to FreeCodeCamp's curriculum may have broken some of these micros
   - [Challenge 2: Request Header Parser](./fcc-backend-challenges#challenge-2---request-header-parser-microservice)
   - [Challenge 3: URL Shortener](./fcc-backend-challenges#challenge-3---url-shortener-microservice)
   - [Challenge 4: Image Search](./fcc-backend-challenges#challenge-4---image-search-abstraction-layer)
-  - [Challenge 4(v2): Exercise Tracker]
+  - [Challenge 4(v2): Exercise Tracker](./fcc-backend-challenges#challenge-4v2---exercise-tracker)
   - [Challenge 5: File Metadata](./fcc-backend-challenges#challenge-5---file-metadata-microservice)
 
 ---------
