@@ -124,9 +124,9 @@ Going to `https://fcc-challenges.herokuapp.com/exercise` will take you to the UI
 
 API backend:
 
-- `POST: /api/exercise/new-user` with username to create a new user
-- `POST: /api/exercise/add` with valid userID, activity, duration, and optionally the date
-- `GET: /api/exercise/log?` with at least userID to get user activity for that user
+- `POST: /api/new-user` with username to create a new user
+- `POST: /api/add` with valid userID, activity, duration, and optionally the date
+- `GET: /api/log?` with at least userID to get user activity for that user
 
 ## Challenge 5 - File Metadata Microservice
 

@@ -8,7 +8,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: true }) // support enco
 
 exerciseRouter.get('/', exerciseTracker.uiPage)
 exerciseRouter.post('/api/new-user', urlencodedParser, exerciseTracker.addUser)
-// exerciseRouter.post('/api/add', app.urlencodedParser, exerciseTracker.addActivity)
-// exerciseRouter.get('/api/log:userID', exerciseTracker.getUserLog)
+exerciseRouter.post('/api/add', urlencodedParser, exerciseTracker.addActivity)
+exerciseRouter.get('/api/log', exerciseTracker.getUserLog)
 
 module.exports = exerciseRouter
