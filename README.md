@@ -1,6 +1,12 @@
 # FreeCodeCamp Backend API Services Challenges
 
-Deployed to Heroku here: <https://fcc-challenges.herokuapp.com/>
+## Retired ☠
+
+:warning: This demo site, and all urls have been retired and taken down. This repository remains for reference/archival purposes only. :warning:
+
+## Original Deployment
+
+Deployed to Heroku here: (dead) <https://fcc-challenges.herokuapp.com/>
 
 These APIs/Pages have been modified to be slightly different than the FreeCodeCamp challenges so that they can all live within the same app and be a bit more useful and cohesive.
 
@@ -12,7 +18,7 @@ A major change to FreeCodeCamp's curriculum may have broken some of these micros
 
 ---------
 
-- APIs
+- APIs (dead)
   - [Challenge 1: Timestamp](./fcc-backend-challenges#challenge-1---timestamp-microservice)
   - [Challenge 2: Request Header Parser](./fcc-backend-challenges#challenge-2---request-header-parser-microservice)
   - [Challenge 3: URL Shortener](./fcc-backend-challenges#challenge-3---url-shortener-microservice)
